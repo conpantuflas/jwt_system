@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
-import RenderUser from "./RenderUser";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  // useEffect(() => {
-  //   if (tokenLogin.token != "") {
-  //     return <Link to="/renderlogin"></Link>;
-  //   }
-  // }, []);
 
   const tokenLogin = {
     token: "",
@@ -35,10 +28,14 @@ const Login = () => {
         tokenLogin.userId = data.user.id;
         console.log(data);
       });
-    // .then((data) => {
-    //   sessionStorage.setItem("token", data.access_token);
-    // });
   });
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (tokenLogin.token != "") {
+      navigate("/renderuser");
+    }
+  }, []);
 
   return (
     <div>
@@ -59,8 +56,6 @@ const Login = () => {
       <button
         onClick={(e) => {
           login(e);
-          if (tokenLogin.token != "") {
-          }
         }}
       >
         Login
